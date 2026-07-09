@@ -51,15 +51,15 @@ workflow:
       - remote_url
       enabled: false
       fileUploadConfig:
-        attachment_image_file_size_limit: 2
-        audio_file_size_limit: 50
-        batch_count_limit: 5
-        file_size_limit: 15
+        attachment_image_file_size_limit: 10
+        audio_file_size_limit: 100
+        batch_count_limit: 52
+        file_size_limit: 150
         file_upload_limit: 50
-        image_file_batch_limit: 10
-        image_file_size_limit: 10
-        single_chunk_attachment_limit: 10
-        video_file_size_limit: 100
+        image_file_batch_limit: 102
+        image_file_size_limit: 11
+        single_chunk_attachment_limit: 102
+        video_file_size_limit: 104
         workflow_file_upload_limit: 10
       image:
         enabled: false
