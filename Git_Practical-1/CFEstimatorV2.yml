@@ -1,5 +1,5 @@
 app:
-  description: 'Advanced Estimator: LLM generates estimate with items & quantities
+  description: 'Advanced Estimator version-2: LLM generates estimate with items & quantities
     -> Iterates over each item to search Home Depot KB for pricing -> Searches Cost
     Code KB for cost codes -> Compiles Final Estimate.'
   icon: brain
