@@ -1,0 +1,1445 @@
+app:
+  description: 'Advanced Estimator: LLM generates estimate with items & quantities
+    -> Iterates over each item to search Home Depot KB for pricing -> Searches Cost
+    Code KB for cost codes -> Compiles Final Estimate.'
+  icon: brain
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: CF Estimator V2
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openrouter:0.0.54@fea0bb6f5208e9c654bd8114c93582760994a7406355512c3381bd8b723498b7
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: 1b08c7be-451d-426b-aea1-ad3596854a1b
+    name: mysql_pass
+    selector:
+    - env
+    - mysql_pass
+    value: ''
+    value_type: secret
+  - description: ''
+    id: 21430b8e-7ef0-4825-8ff7-04ab8c7124fa
+    name: jwt_secret
+    selector:
+    - env
+    - jwt_secret
+    value: ''
+    value_type: secret
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1770000000002-source-1777290742570-target
+      selected: false
+      source: '1770000000002'
+      sourceHandle: source
+      target: '1777290742570'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 17780737366910-source-1777294859344-target
+      selected: false
+      source: '17780737366910'
+      sourceHandle: source
+      target: '1777294859344'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1770000000001-source-1778593390426-target
+      source: '1770000000001'
+      sourceHandle: source
+      target: '1778593390426'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1778593390426-source-1770000000002-target
+      source: '1778593390426'
+      sourceHandle: source
+      target: '1770000000002'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1777290742570-source-1780047896920-target
+      source: '1777290742570'
+      sourceHandle: source
+      target: '1780047896920'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1780047428611'
+        sourceType: iteration-start
+        targetType: tool
+      id: 1780047428611start-source-1780051794499-target
+      source: 1780047428611start
+      sourceHandle: source
+      target: '1780051794499'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: iteration
+      id: 1780047896920-source-1780047428611-target
+      source: '1780047896920'
+      sourceHandle: source
+      target: '1780047428611'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: iteration
+      id: 1780047896920-source-1780061227685-target
+      source: '1780047896920'
+      sourceHandle: source
+      target: '1780061227685'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1780061227685'
+        sourceType: iteration-start
+        targetType: tool
+      id: 1780061227685start-source-1780061271071-target
+      source: 1780061227685start
+      sourceHandle: source
+      target: '1780061271071'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInLoop: false
+        sourceType: iteration
+        targetType: variable-aggregator
+      id: 1780061227685-source-1780061357933-target
+      source: '1780061227685'
+      sourceHandle: source
+      target: '1780061357933'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: iteration
+        targetType: variable-aggregator
+      id: 1780047428611-source-1780061357933-target
+      source: '1780047428611'
+      sourceHandle: source
+      target: '1780061357933'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: variable-aggregator
+        targetType: llm
+      id: 1780061357933-source-17780737366910-target
+      source: '1780061357933'
+      sourceHandle: source
+      target: '17780737366910'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: User will input Project Description as a Text as of Now, more descriptive
+          text more Accurate estimate.
+        selected: false
+        title: User Input
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: Project Description
+          max_length: 2000
+          options: []
+          placeholder: ''
+          required: true
+          type: paragraph
+          variable: project_description
+        - default: Home Depot
+          hint: ''
+          label: Build from
+          options:
+          - Home Depot
+          - 1Build
+          - Cost item Database
+          placeholder: ''
+          required: true
+          type: select
+          variable: build_from
+        - default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYWlsZXNoLmxhdGhpeWFAd2Vlbmdncy5pbiIsInVzZXJfaWQiOjQyNTYwNjksImNvbXBhbnlfaWQiOjIwMTYsImVtYWlsIjoic2hhaWxlc2gubGF0aGl5YUB3ZWVuZ2dzLmluIiwiZnVsbE5hbWUiOiJTaGFpbGVzaCBXZWVuZ2dzIiwicm9sZV9pZCI6MTI2OTg2LCJjZl90b2tlbiI6IiQyYiQxMCRDSEdwVS44ZFBWODd6UXZWM1ZacXV1bkFhYVp3cjRWeXEyVldOanQ5akhXdVZEa2FBV3ZZT18wXzAiLCJmcm9tIjoiQ0YiLCJpYXQiOjE3Nzc0NDQwOTEsImV4cCI6MTc3NzUzMDQ5MX0.K435M1Yvvj3v3oAq5cqXIlkMTBmaxYaoWYzaMr9RudE
+          hint: ''
+          label: Access Token
+          options: []
+          placeholder: ''
+          required: true
+          type: paragraph
+          variable: access_token
+        - default: CSI Extended
+          hint: ''
+          label: Costcode Type
+          options:
+          - CSI Extended
+          - NHBA Extended
+          - From Stored Table
+          - From Cost Item Database
+          placeholder: ''
+          required: true
+          type: select
+          variable: costcode_type
+        - default: '33.7136460'
+          hint: ''
+          label: lat
+          options: []
+          placeholder: ''
+          required: true
+          type: number
+          variable: lat
+        - default: '-84.2128154'
+          hint: ''
+          label: lng
+          options: []
+          placeholder: ''
+          required: true
+          type: number
+          variable: lng
+        - default: 5 Km
+          hint: ''
+          label: Radius
+          options:
+          - 5 Km
+          - 10 Km
+          - 20 Km
+          placeholder: ''
+          required: true
+          type: select
+          variable: Radius
+      height: 325
+      id: '1770000000001'
+      position:
+        x: -923.5302775199107
+        y: 128.634398278851
+      positionAbsolute:
+        x: -923.5302775199107
+        y: 128.634398278851
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: In this step, We are building base for estimate and generating all required
+          materials as of now, labor and equipment is excluded as of now, will add
+          later on once i got some details from Jaydeep.
+        model:
+          completion_params:
+            exclude_reasoning_tokens: true
+            reasoning_effort: low
+            temperature: 0.5
+          mode: chat
+          name: google/gemini-3.1-pro-preview
+          provider: langgenius/openrouter/openrouter
+        prompt_template:
+        - id: 11111111-1111-1111-1111-111111111111
+          role: system
+          text: "You are a veteran Chief Construction Estimator. Given a project description,\
+            \ perform a master-level materials take-off and generate a comprehensive\
+            \ estimate. output must be only json, no thinking and any explanation\
+            \ texts. do not include ``` please.\n\nRULES & ASSUMPTIONS:\n\n1. EXHAUSTIVE\
+            \ TAKE-OFF: Detail every required material. You MUST include \"invisible\"\
+            \ materials: fasteners, adhesives, sealants, shims, tape, joint compound,\
+            \ sandpaper, and prep/cleanup materials.\n2. BASELINE ASSUMPTIONS: If\
+            \ dimensions are missing, use standard building codes (e.g., 8-foot ceilings,\
+            \ 16-inch O.C. stud spacing).\n3. WASTE FACTORS: Apply industry-standard\
+            \ waste factors (e.g., 10% for lumber/drywall, 15% for tile, 5% for hardware).\n\
+            4. HOME DEPOT VECTOR OPTIMIZATION: The \"item_name\" will be used as a\
+            \ query for a vector database of Home Depot products. Format this string\
+            \ to be highly descriptive and keyword-rich. Include the primary product\
+            \ name, material, key dimensions, grade, and typical brand (e.g., \"5/8\
+            \ in. 4 ft. x 8 ft. Type X Fire Rated Drywall USG Sheetrock\", \"50 lb\
+            \ White Fortified Thin-Set Mortar Custom Building Products\").\n5. ITEM\
+            \ NAME QUERY OPTIMIZATION (item_name_query): This field is used for MySQL\
+            \ BOOLEAN MODE Full-Text Search (MATCH ... AGAINST ... IN BOOLEAN MODE).\
+            \ It must NOT contain any dimensions, sizes, measurements, or numeric\
+            \ specs. Instead, include highly specific descriptive keywords that identify\
+            \ the product type, material composition, brand, grade, finish, and use-case.\
+            \ The CRITICAL difference from Natural Language Mode is that you MUST\
+            \ prefix essential keywords with a plus sign (+) to indicate they MUST\
+            \ be present in the search result. Non-prefixed keywords are optional\
+            \ and serve as ranking boosters only.\n\n   **Boolean Mode + Prefix Strategy:**\n\
+            \n   a) **CORE PRODUCT IDENTITY WORDS → always +prefix:** Prefix with\
+            \ + the 2-3 most fundamental nouns that define WHAT the product IS. Without\
+            \ these words, the result would be a completely wrong product category.\
+            \ These are the non-negotiable product-type nouns. Examples: +stud +lumber,\
+            \ +drywall, +mortar, +scaffolding, +permit, +labour, +grout, +cabinet,\
+            \ +concrete, +paint, +wire, +pipe.\n\n   b) **CRITICAL DIFFERENTIATING\
+            \ FEATURES → usually +prefix:** Prefix with + the 1-2 most important features\
+            \ that distinguish this specific variant from others in the same category.\
+            \ Only add + if a result lacking this feature would be the WRONG product\
+            \ variant. Use caution — only apply + to features that are likely to appear\
+            \ in the database in that exact word form. If a feature has common alternative\
+            \ wordings (e.g., \"fire rated\" vs \"fire-resistant\"), put + only on\
+            \ the most universal keyword and leave alternatives without +. Examples:\
+            \ +fire for fire-rated drywall (because \"fire\" appears in both \"fire\
+            \ rated\" and \"fire-resistant\"), +tile for tile mortar, +exterior for\
+            \ exterior-grade products.\n\n   c) **SUPPLEMENTARY KEYWORDS → no + prefix:**\
+            \ All other keywords should NOT have a + prefix. These words boost ranking\
+            \ when present but do NOT exclude results that lack them. This category\
+            \ includes:\n\n   - Brand names (USG, VersaBond, Durock, RedGuard)\n \
+            \  - Synonyms and alternative product names (wallboard, sheetrock, drywall,\
+            \ gypsum board)\n   - Material alternatives and composition words (gypsum,\
+            \ whitewood, SPF, ceramic, porcelain)\n   - Modifiers and grades (premium,\
+            \ white, fortified, modified, standard, heavy-duty)\n   - Secondary use-cases\
+            \ and related terms (interior, construction, framing, residential)\n \
+            \  - Hyphenated term variants — always include WITHOUT + because MySQL\
+            \ tokenizes hyphens as word boundaries and the same concept may appear\
+            \ as one word, hyphenated, or two words (e.g., include \"thinset thin-set\"\
+            \ or \"fireproof fire-proof\" as optional terms)\n\n   d) **PHRASE MATCHING\
+            \ with +\"phrase\":** Use double-quoted +prefix phrases ONLY for multi-word\
+            \ terms that are institutional, legal, or industry-standard exact collocations\
+            \ that NEVER vary in wording. Do NOT use phrase matching for product features\
+            \ that may be worded differently across product listings. Examples:\n\n\
+            \   - CORRECT: +\"building permit\" (this phrase is a fixed legal term)\n\
+            \   - CORRECT: +\"joint compound\" (this is a standard fixed product name)\n\
+            \   - INCORRECT: +\"fire rated\" (database may have \"fire-resistant\"\
+            \ or \"fireproof\" instead — use +fire rated instead)\n   - INCORRECT:\
+            \ +\"thin set\" (database may have \"thinset\" as one word — use +mortar\
+            \ thinset thin-set instead)\n\n   e) **PREFIX WILDCARD (+word*):** Use\
+            \ the truncation operator * after a +prefix word ONLY when there are clear\
+            \ variant forms of the same root that are all valid matches, and the root\
+            \ is long enough to be unambiguous (minimum 5-6 characters before the\
+            \ *). This ensures \"scaffold*\" matches scaffold, scaffolding, scaffolds.\
+            \ Do NOT use wildcards with short roots (e.g., avoid +dry* as it matches\
+            \ dry, drying, drywall, dryness — too broad and ambiguous).\n\n   f) **TOTAL\
+            \ + PREFIX COUNT:** Aim for 3-5 words with + prefix per item_name_query.\
+            \ Too many + words over-constrains the search and misses valid alternative\
+            \ product listings; too few returns irrelevant products from other categories.\n\
+            \n   **Examples:**\n\n   - item_name: \"2 in. x 4 in. x 8 ft. Premium\
+            \ Kiln-Dried Whitewood Stud Lumber\" → item_name_query: \"+stud +lumber\
+            \ +framing whitewood kiln-dried premium construction grade SPF spruce\
+            \ pine fir\"\n     - WHY: +stud +lumber = must be a stud and lumber (core\
+            \ identity). +framing = must be framing-grade (critical differentiator\
+            \ separating framing studs from finishing lumber). whitewood, SPF, spruce,\
+            \ pine, fir = optional species variants. kiln-dried, premium, construction,\
+            \ grade = optional boosters.\n   - item_name: \"5/8 in. 4 ft. x 8 ft.\
+            \ Type X Fire Rated Drywall USG Sheetrock\" → item_name_query: \"+drywall\
+            \ +fire +gypsum rated type X board USG sheetrock wallboard interior fire-resistant\
+            \ fireproof\"\n     - WHY: +drywall = must be drywall (core identity).\
+            \ +fire = must be fire-related (critical differentiator — uses +fire instead\
+            \ of +\"fire rated\" because the database may say \"fire-resistant\" or\
+            \ \"fireproof\"). +gypsum = must be gypsum-based (ensures we don't match\
+            \ cement board or other wall panels). rated, type, X, board, USG, sheetrock,\
+            \ wallboard, interior, fire-resistant, fireproof = optional boosters including\
+            \ alternative fire-rating wordings.\n   - item_name: \"50 lb White Fortified\
+            \ VersaBond Thin-Set Mortar Custom Building Products\" → item_name_query:\
+            \ \"+mortar +tile +adhesive thinset thin-set VersaBond white fortified\
+            \ custom building products modified\"\n     - WHY: +mortar = must be mortar\
+            \ (core identity). +tile = must be for tile application (critical differentiator\
+            \ separating tile mortar from masonry or repair mortar). +adhesive = must\
+            \ be an adhesive/bonding product (ensures we match the functional category).\
+            \ thinset, thin-set = both word-form variants as optional (NOT + prefixed\
+            \ because MySQL tokenizes hyphens and \"thinset\" vs \"thin-set\" are\
+            \ different tokens). VersaBond, white, fortified, custom, building, products,\
+            \ modified = optional boosters.\n   - item_name: \"Drywall Hanging and\
+            \ Finishing Labour\" → item_name_query: \"+drywall +labour +installation\
+            \ hanging finishing taping mudding work\"\n     - WHY: +drywall = must\
+            \ relate to drywall (scope of work). +labour = must be a labour/service\
+            \ line (core identity — separates from material items). +installation\
+            \ = must be installation work (reinforces it's a service, not a product).\
+            \ hanging, finishing, taping, mudding, work = optional task-specific boosters.\n\
+            \   - item_name: \"Scaffolding Rental 5 ft. x 7 ft. Baker Style Rolling\
+            \ Scaffold Tower\" → item_name_query: \"+scaffold* +tower baker style\
+            \ rolling rental portable staging\"\n     - WHY: +scaffold* = must contain\
+            \ a word starting with \"scaffold\" (matches scaffold, scaffolding, scaffolds\
+            \ — uses wildcard because these variant forms are all valid). +tower =\
+            \ must be a tower-style scaffold (critical differentiator separating tower\
+            \ scaffolds from ladder jacks or pump jacks). baker, style, rolling, rental,\
+            \ portable, staging = optional boosters.\n   - item_name: \"Building Permit\
+            \ Fee\" → item_name_query: \"+\"building permit\" +fee municipal construction\
+            \ approval regulatory\"\n     - WHY: +\"building permit\" = must contain\
+            \ the exact phrase (this is a fixed legal/institutional term that never\
+            \ varies in wording — safe to use phrase matching). +fee = must be a fee/cost\
+            \ item (separates from permit expediting services or permit guides). municipal,\
+            \ construction, approval, regulatory = optional boosters.\n6. COST CODE\
+            \ QUERY (costcode_query): This field concatenates category and sub_category\
+            \ with a \" > \" separator for direct cost code matching. Format: \"category\
+            \ > sub_category\". Examples:\n\n   - \"Wood, Plastics, and Composites\
+            \ > Rough Carpentry\"\n   - \"Finishes > Gypsum Board\"\n   - \"Finishes\
+            \ > Tiling\"\n   - \"General Requirements > Permits and Fees\"\n7. COST\
+            \ CODE VECTOR OPTIMIZATION: The \"category\" and \"sub_category\" will\
+            \ be used for vector matching against the {{#1770000000001.costcode_type#}}\
+            \ MasterFormat database. Use standard, highly descriptive industry terminology\
+            \ from this framework. use {{#1770000000001.costcode_type#}} cost codes\
+            \ and more specific to it. Do NOT include any alphanumeric codes or suffixes\
+            \ like \"-M\" or \"-L\" (e.g., category: \"Finishes\", sub_category: \"\
+            Gypsum Board\").\n8. PRICING: Base the \"unit_price\" on realistic Home\
+            \ Depot retail pricing (national average) to serve as a placeholder estimate.\n\
+            9. COST TYPE GROUPING: Every line item MUST be assigned a \"cost_type\"\
+            \ from exactly one of the following four groups: \"item_material\", \"\
+            item_labour\", \"item_equipment\", or \"item_other\". Apply the following\
+            \ rules:\n\n   - \"item_material\": Physical products, supplies, and consumables\
+            \ purchased (lumber, drywall, fasteners, adhesives, tile, etc.).\n   -\
+            \ \"item_labour\": Human work tasks, installation, finishing, and cleanup\
+            \ labor costs.\n   - \"item_equipment\": Rented or owned tools, machinery,\
+            \ and plant (e.g., scaffolding rental, concrete mixer, compressor).\n\
+            \   - \"item_other\": Permits, inspections, fees, temporary facilities,\
+            \ insurance, and miscellaneous project costs that do not fit the above.\n\
+            \nSTRICT DATA TYPES & SCHEMA:\nYou must output a JSON array of objects.\
+            \ To ensure database compatibility, format the keys EXACTLY as follows:\n\
+            \n- \"cost_type\": (String) The cost grouping for this line item. Must\
+            \ be exactly one of: \"item_material\", \"item_labour\", \"item_equipment\"\
+            , or \"item_other\".\n- \"category\": (String) The broad {{#1770000000001.costcode_type#}}\
+            \ MasterFormat phase optimized for vector search.\n- \"sub_category\"\
+            : (String) The specific {{#1770000000001.costcode_type#}} MasterFormat\
+            \ grouping optimized for vector search.\n- \"costcode_query\": (String)\
+            \ Concatenation of category and sub_category in format: \"category > sub_category\"\
+            .\n- \"item_name\": (String) The descriptive Home Depot product query\
+            \ optimized for vector search (includes dimensions, sizes, specs).\n-\
+            \ \"item_name_query\": (String) Keywords for MySQL BOOLEAN MODE Full-Text\
+            \ Search (MATCH ... AGAINST ... IN BOOLEAN MODE). NO dimensions, sizes,\
+            \ or numeric measurements. Must include 3-5 words prefixed with + (must-match)\
+            \ covering core product identity and critical differentiators. Remaining\
+            \ keywords are optional ranking boosters including synonyms, brand names,\
+            \ material variants, and alternative word forms. See Rule 5 for detailed\
+            \ strategy.\n- \"quantity\": (Float) ONLY the numeric value (e.g., 45.0).\n\
+            - \"unit_of_measure\": (String) The packaging or measurement unit (e.g.,\
+            \ \"pieces\", \"sq ft\", \"box (5 lbs)\").\n- \"waste_factor_percentage\"\
+            : (Integer) The waste percentage applied (e.g., 10).\n- \"unit_price\"\
+            : (Float) The realistic retail cost per unit, NO currency symbols (e.g.,\
+            \ 3.48).\n- \"total_price\": (Float) quantity * unit_price, NO currency\
+            \ symbols (e.g., 156.60).\n- \"assumption_note\": (String) A brief note\
+            \ explaining the math/assumption for this item.\n\nExample Output:\n[\n\
+            \  {\n    \"cost_type\": \"item_material\",\n    \"category\": \"Wood,\
+            \ Plastics, and Composites\",\n    \"sub_category\": \"Rough Carpentry\"\
+            ,\n    \"costcode_query\": \"Wood, Plastics, and Composites > Rough Carpentry\"\
+            ,\n    \"item_name\": \"2 in. x 4 in. x 8 ft. Premium Kiln-Dried Whitewood\
+            \ Stud Lumber\",\n    \"item_name_query\": \"+stud +lumber +framing whitewood\
+            \ kiln-dried premium construction grade SPF spruce pine fir\",\n    \"\
+            quantity\": 18.0,\n    \"unit_of_measure\": \"pieces\",\n    \"waste_factor_percentage\"\
+            : 10,\n    \"unit_price\": 3.48,\n    \"total_price\": 62.64,\n    \"\
+            assumption_note\": \"Assumes 16-in O.C. for 20 LF of wall, plus top/bottom\
+            \ plates and 10% waste.\"\n  },\n  {\n    \"cost_type\": \"item_material\"\
+            ,\n    \"category\": \"Finishes\",\n    \"sub_category\": \"Gypsum Board\"\
+            ,\n    \"costcode_query\": \"Finishes > Gypsum Board\",\n    \"item_name\"\
+            : \"5/8 in. 4 ft. x 8 ft. Type X Fire Rated Drywall USG Sheetrock\",\n\
+            \    \"item_name_query\": \"+drywall +fire +gypsum rated type X board\
+            \ USG sheetrock wallboard interior fire-resistant fireproof\",\n    \"\
+            quantity\": 12.0,\n    \"unit_of_measure\": \"sheets\",\n    \"waste_factor_percentage\"\
+            : 10,\n    \"unit_price\": 14.98,\n    \"total_price\": 179.76,\n    \"\
+            assumption_note\": \"Assumes 8ft ceilings for 320 sq ft of wall space\
+            \ + 10% waste.\"\n  },\n  {\n    \"cost_type\": \"item_material\",\n \
+            \   \"category\": \"Finishes\",\n    \"sub_category\": \"Tiling\",\n \
+            \   \"costcode_query\": \"Finishes > Tiling\",\n    \"item_name\": \"\
+            50 lb White Fortified VersaBond Thin-Set Mortar Custom Building Products\"\
+            ,\n    \"item_name_query\": \"+mortar +tile +adhesive thinset thin-set\
+            \ VersaBond white fortified custom building products modified\",\n   \
+            \ \"quantity\": 2.0,\n    \"unit_of_measure\": \"bags (50 lb)\",\n   \
+            \ \"waste_factor_percentage\": 5,\n    \"unit_price\": 18.97,\n    \"\
+            total_price\": 37.94,\n    \"assumption_note\": \"Coverage is approx 40\
+            \ sq ft per bag; requires 2 bags for 44 sq ft.\"\n  },\n  {\n    \"cost_type\"\
+            : \"item_labour\",\n    \"category\": \"Finishes\",\n    \"sub_category\"\
+            : \"Gypsum Board\",\n    \"costcode_query\": \"Finishes > Gypsum Board\"\
+            ,\n    \"item_name\": \"Drywall Hanging and Finishing Labour\",\n    \"\
+            item_name_query\": \"+drywall +labour +installation hanging finishing\
+            \ taping mudding work\",\n    \"quantity\": 320.0,\n    \"unit_of_measure\"\
+            : \"sq ft\",\n    \"waste_factor_percentage\": 0,\n    \"unit_price\"\
+            : 1.50,\n    \"total_price\": 480.00,\n    \"assumption_note\": \"Estimated\
+            \ labour rate for hanging and taping drywall at $1.50/sq ft.\"\n  },\n\
+            \  {\n    \"cost_type\": \"item_equipment\",\n    \"category\": \"Construction\
+            \ Aids and Equipment\",\n    \"sub_category\": \"Scaffolding and Staging\"\
+            ,\n    \"costcode_query\": \"Construction Aids and Equipment > Scaffolding\
+            \ and Staging\",\n    \"item_name\": \"Scaffolding Rental 5 ft. x 7 ft.\
+            \ Baker Style Rolling Scaffold Tower\",\n    \"item_name_query\": \"+scaffold*\
+            \ +tower baker style rolling rental portable staging\",\n    \"quantity\"\
+            : 1.0,\n    \"unit_of_measure\": \"week\",\n    \"waste_factor_percentage\"\
+            : 0,\n    \"unit_price\": 150.00,\n    \"total_price\": 150.00,\n    \"\
+            assumption_note\": \"Assumed 1-week rental for interior finishing work.\"\
+            \n  },\n  {\n    \"cost_type\": \"item_other\",\n    \"category\": \"\
+            General Requirements\",\n    \"sub_category\": \"Permits and Fees\",\n\
+            \    \"costcode_query\": \"General Requirements > Permits and Fees\",\n\
+            \    \"item_name\": \"Building Permit Fee\",\n    \"item_name_query\"\
+            : \"+\\\"building permit\\\" +fee municipal construction approval regulatory\"\
+            ,\n    \"quantity\": 1.0,\n    \"unit_of_measure\": \"lump sum\",\n  \
+            \  \"waste_factor_percentage\": 0,\n    \"unit_price\": 500.00,\n    \"\
+            total_price\": 500.00,\n    \"assumption_note\": \"Estimated municipal\
+            \ building permit fee; actual cost varies by jurisdiction.\"\n  }\n]\n\
+            \nFATAL ERROR WARNING: You must output RAW JSON ONLY. Do NOT wrap the\
+            \ output in markdown code blocks (no ```json). Do NOT add headers, greetings,\
+            \ explanations, totals, or any other text. The very first character of\
+            \ your response must be [ and the very last character must be ]."
+        - id: 22222222-2222-2222-2222-222222222222
+          role: user
+          text: '{{#1770000000001.project_description#}}'
+        selected: false
+        structured_output_enabled: false
+        title: Analysing Project and Generating list of Items
+        type: llm
+        vision:
+          enabled: false
+      height: 196
+      id: '1770000000002'
+      position:
+        x: -99.93536137112517
+        y: 149.634398278851
+      positionAbsolute:
+        x: -99.93536137112517
+        y: 149.634398278851
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\nimport re\nimport base64\nimport os\nimport hmac\nimport\
+          \ hashlib\n\ndef clean_and_parse(raw: str):\n    if not raw:\n        return\
+          \ {}\n\n    # Remove markdown fences\n    cleaned = raw.strip()\n    cleaned\
+          \ = re.sub(r'^```[a-zA-Z]*\\s*', '', cleaned)\n    cleaned = re.sub(r'```\\\
+          s*$', '', cleaned)\n    cleaned = cleaned.strip()\n\n    try:\n        data\
+          \ = json.loads(cleaned)\n\n        # Handle stringified JSON (JWT case)\n\
+          \        if isinstance(data, str):\n            data = json.loads(data)\n\
+          \n        return data\n\n    except Exception:\n        return {}\n\ndef\
+          \ decode_jwt(token: str):\n    \"\"\"Decode and verify a JWT token using\
+          \ secret from environment variable jwt_secret.\"\"\"\n    if not token:\n\
+          \        return {}\n    try:\n        token = token.strip()\n        parts\
+          \ = token.split('.')\n        if len(parts) != 3:\n            return {}\n\
+          \        \n        header_b64, payload_b64, signature_b64 = parts\n    \
+          \    \n        # Verify signature if jwt_secret is set\n        jwt_secret\
+          \ = os.environ.get(\"jwt_secret\", \"\")\n        if jwt_secret:\n     \
+          \       # Verify HMAC-SHA256 signature\n            signing_input = f\"\
+          {header_b64}.{payload_b64}\".encode('utf-8')\n            expected_sig =\
+          \ hmac.new(\n                jwt_secret.encode('utf-8'),\n             \
+          \   signing_input,\n                hashlib.sha256\n            ).digest()\n\
+          \            \n            # Decode the provided signature\n           \
+          \ sig_padding = 4 - len(signature_b64) % 4\n            if sig_padding !=\
+          \ 4:\n                signature_b64 += '=' * sig_padding\n            actual_sig\
+          \ = base64.urlsafe_b64decode(signature_b64)\n            \n            if\
+          \ not hmac.compare_digest(expected_sig, actual_sig):\n                return\
+          \ {}\n        \n        # Decode the payload (second part)\n        padding\
+          \ = 4 - len(payload_b64) % 4\n        if padding != 4:\n            payload_b64\
+          \ += '=' * padding\n        decoded_bytes = base64.urlsafe_b64decode(payload_b64)\n\
+          \        return json.loads(decoded_bytes)\n    except Exception:\n     \
+          \   return {}\n\ndef main(result: str = \"\", text: str = \"\"):\n    #\
+          \ Parse result from LLM\n    llm_data = clean_and_parse(result)\n\n    #\
+          \ text contains a raw JWT token that we need to decode\n    # JWT secret\
+          \ is passed via environment variable JWT_SECRET\n    jwt_dict = decode_jwt(text.strip()\
+          \ if text else \"\")\n\n    # If llm_data is a list, keep it as-is\n   \
+          \ llm_list = llm_data if isinstance(llm_data, list) else []\n    llm_dict\
+          \ = llm_data if isinstance(llm_data, dict) else {}\n\n    # Merge dicts\
+          \ (JWT takes priority for auth fields)\n    merged = {**llm_dict, **jwt_dict}\n\
+          \n    # Extract fields from llm_list as arrays for iteration\n    costcode_query\
+          \ = [item.get(\"costcode_query\", \"\") for item in llm_list if isinstance(item,\
+          \ dict)]\n    item_name_query = [item.get(\"item_name_query\", \"\") for\
+          \ item in llm_list if isinstance(item, dict)]\n    item_name = [item.get(\"\
+          item_name\", \"\") for item in llm_list if isinstance(item, dict)]\n   \
+          \ cost_type = [item.get(\"cost_type\", \"\") for item in llm_list if isinstance(item,\
+          \ dict)]\n\n    return {\n        \"user_id\": str(jwt_dict.get(\"user_id\"\
+          , \"\")),\n        \"company_id\": str(jwt_dict.get(\"company_id\", \"\"\
+          )),\n        \"role_id\": str(jwt_dict.get(\"role_id\", \"\")),\n      \
+          \  \"count\": len(llm_list) if llm_list else len(merged),\n        \"costcode_query\"\
+          : json.dumps(costcode_query),\n        \"item_name_query\": json.dumps(item_name_query),\n\
+          \        \"item_name\": json.dumps(item_name),\n        \"cost_type\": json.dumps(cost_type)\n\
+          \    }\n"
+        code_language: python3
+        outputs:
+          company_id:
+            children: null
+            type: string
+          cost_type:
+            children: null
+            type: string
+          costcode_query:
+            children: null
+            type: string
+          count:
+            children: null
+            type: number
+          item_name:
+            children: null
+            type: string
+          item_name_query:
+            children: null
+            type: string
+          role_id:
+            children: null
+            type: string
+          user_id:
+            children: null
+            type: string
+        selected: false
+        title: Decode LLM Result and Company Info
+        type: code
+        variables:
+        - value_selector:
+          - '1770000000002'
+          - text
+          value_type: string
+          variable: result
+        - value_selector:
+          - '1770000000001'
+          - access_token
+          value_type: string
+          variable: text
+      height: 52
+      id: '1777290742570'
+      position:
+        x: 311.8119098028732
+        y: 182.282003246564
+      positionAbsolute:
+        x: 311.8119098028732
+        y: 182.282003246564
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '17780737366910'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: Output formating
+        type: end
+      height: 88
+      id: '1777294859344'
+      position:
+        x: 4682
+        y: 259
+      positionAbsolute:
+        x: 4682
+        y: 259
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1780061357933'
+          - output
+        isInIteration: false
+        isInLoop: false
+        model:
+          completion_params:
+            exclude_reasoning_tokens: true
+            reasoning_effort: medium
+            temperature: 0.8
+          mode: chat
+          name: google/gemini-3-flash-preview
+          provider: langgenius/openrouter/openrouter
+        prompt_template:
+        - id: c4c3ae90-1153-4f82-902f-f79a80da0d54
+          role: system
+          text: 'You are a master estimator for Contractor Foreman. Build the best
+            final estimate from the data below. Make sure you build the estimate from
+            the provided context only.
+
+
+            Requirements:
+
+            1. Mention the stores and its addresses and the Radius.
+
+            2. Output the estimate strictly in a fixed Markdown table format with
+            the following exact columns:
+
+            | cost_type | costcode name | costcode | Item name | item name home depot
+            (home depot id) | Qty | unit | price | cost | notes |
+
+            3. In the ''notes'' column, provide the rationale determining the cost
+            code and pricing information.
+
+            4. At the bottom of the table, include a final row or section calculating
+            the total cost for all rows.
+
+
+            Datasource 1 : {{#context#}}
+
+            or
+
+            Datasource 3 : {{#1770000000002.text#}}'
+        - id: 3e4d4bbe-6317-447f-8840-5d76ed9ecf5a
+          role: user
+          text: '{{#1770000000001.project_description#}}'
+        reasoning_format: separated
+        selected: false
+        title: Generating Final Estimate (1)
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '17780737366910'
+      position:
+        x: 3998.6216553302247
+        y: 233.98520750264572
+      positionAbsolute:
+        x: 3998.6216553302247
+        y: 233.98520750264572
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import math\n\ndef main(latitude: float, longitude: float, radius:\
+          \ str) -> dict:\n    # Extract the numerical value from the radius string\
+          \ (e.g., \"10 Km\" -> 10.0)\n    if isinstance(radius, str):\n        radius_float\
+          \ = float(radius.lower().replace(\"km\", \"\").strip())\n    else:\n   \
+          \     radius_float = float(radius)\n        \n    # Assuming radius is in\
+          \ kilometers. Earth's radius is approx 6371 km.\n    earth_radius = 6371.0\n\
+          \    \n    # Calculate the change in latitude and longitude in degrees\n\
+          \    lat_delta = math.degrees(radius_float / earth_radius)\n    lon_delta\
+          \ = math.degrees(radius_float / (earth_radius * math.cos(math.radians(latitude))))\n\
+          \    \n    return {\n        \"min_lat\": latitude - lat_delta,\n      \
+          \  \"max_lat\": latitude + lat_delta,\n        \"min_lon\": longitude -\
+          \ lon_delta,\n        \"max_lon\": longitude + lon_delta,\n    }\n"
+        code_language: python3
+        outputs:
+          max_lat:
+            children: null
+            type: number
+          max_lon:
+            children: null
+            type: number
+          min_lat:
+            children: null
+            type: number
+          min_lon:
+            children: null
+            type: number
+        selected: false
+        title: Find Nearby Stores
+        type: code
+        variables:
+        - value_selector:
+          - '1770000000001'
+          - lat
+          value_type: number
+          variable: latitude
+        - value_selector:
+          - '1770000000001'
+          - lng
+          value_type: number
+          variable: longitude
+        - value_selector:
+          - '1770000000001'
+          - Radius
+          value_type: string
+          variable: radius
+      height: 52
+      id: '1778593390426'
+      position:
+        x: -505.1378867643297
+        y: 149.634398278851
+      positionAbsolute:
+        x: -505.1378867643297
+        y: 149.634398278851
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        error_handle_mode: terminated
+        flatten_output: true
+        height: 409
+        is_parallel: false
+        iterator_input_type: array[object]
+        iterator_selector:
+        - '1780047896920'
+        - result
+        output_selector:
+        - '1780051794499'
+        - result
+        output_type: array[object]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1780047428611start
+        title: Iteration
+        type: iteration
+        width: 789
+      height: 409
+      id: '1780047428611'
+      position:
+        x: 2008.3528656646358
+        y: 435.5095644040349
+      positionAbsolute:
+        x: 2008.3528656646358
+        y: 435.5095644040349
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 789
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1780047428611start
+      parentId: '1780047428611'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 2032.3528656646358
+        y: 503.5095644040349
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        code: "import json\n\ndef main(item_name_query, item_name, cost_type):\n\n\
+          \    queries = json.loads(item_name_query)\n    items_list = json.loads(item_name)\n\
+          \    cost_types = json.loads(cost_type)\n\n    result = []\n\n    min_length\
+          \ = min(\n        len(queries),\n        len(items_list),\n        len(cost_types)\n\
+          \    )\n\n    for i in range(min_length):\n        result.append({\n   \
+          \         \"item_name_query\": queries[i],\n            \"item_name\": items_list[i],\n\
+          \            \"cost_type\": cost_types[i]\n        })\n\n    return {\n\
+          \        \"result\": result\n    }\n\n"
+        code_language: python3
+        outputs:
+          result:
+            children: null
+            type: array[object]
+        selected: false
+        title: Prepare Items For Iteration
+        type: code
+        variables:
+        - value_selector:
+          - '1777290742570'
+          - item_name_query
+          value_type: string
+          variable: item_name_query
+        - value_selector:
+          - '1777290742570'
+          - item_name
+          value_type: string
+          variable: item_name
+        - value_selector:
+          - '1777290742570'
+          - cost_type
+          value_type: string
+          variable: cost_type
+      height: 52
+      id: '1780047896920'
+      position:
+        x: 689.2641868771613
+        y: 188.33350360212677
+      positionAbsolute:
+        x: 689.2641868771613
+        y: 188.33350360212677
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        isInIteration: true
+        isInLoop: false
+        is_team_authorization: true
+        iteration_id: '1780047428611'
+        paramSchemas:
+        - auto_generate: null
+          default: ''
+          form: form
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: current_item
+            ja_JP: current_item
+            pt_BR: current_item
+            zh_Hans: current_item
+          llm_description: ''
+          max: null
+          min: null
+          name: current_item
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: Home Depot
+          form: form
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: Build from
+            ja_JP: Build from
+            pt_BR: Build from
+            zh_Hans: Build from
+          llm_description: ''
+          max: null
+          min: null
+          name: build_from
+          options:
+          - icon: null
+            label:
+              en_US: Home Depot
+              ja_JP: Home Depot
+              pt_BR: Home Depot
+              zh_Hans: Home Depot
+            value: Home Depot
+          - icon: null
+            label:
+              en_US: 1Build
+              ja_JP: 1Build
+              pt_BR: 1Build
+              zh_Hans: 1Build
+            value: 1Build
+          - icon: null
+            label:
+              en_US: Cost item Database
+              ja_JP: Cost item Database
+              pt_BR: Cost item Database
+              zh_Hans: Cost item Database
+            value: Cost item Database
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: ''
+          form: form
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: min_lat
+            ja_JP: min_lat
+            pt_BR: min_lat
+            zh_Hans: min_lat
+          llm_description: ''
+          max: null
+          min: null
+          name: min_lat
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: ''
+          form: form
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: max_lat
+            ja_JP: max_lat
+            pt_BR: max_lat
+            zh_Hans: max_lat
+          llm_description: ''
+          max: null
+          min: null
+          name: max_lat
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: ''
+          form: form
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: min_lon
+            ja_JP: min_lon
+            pt_BR: min_lon
+            zh_Hans: min_lon
+          llm_description: ''
+          max: null
+          min: null
+          name: min_lon
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: ''
+          form: form
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: max_lon
+            ja_JP: max_lon
+            pt_BR: max_lon
+            zh_Hans: max_lon
+          llm_description: ''
+          max: null
+          min: null
+          name: max_lon
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        params:
+          build_from: ''
+          current_item: ''
+          max_lat: ''
+          max_lon: ''
+          min_lat: ''
+          min_lon: ''
+        plugin_id: null
+        plugin_unique_identifier: null
+        provider_icon:
+          background: '#FFEAD5'
+          content: 🤖
+        provider_id: ff6ba643-3057-429b-8e5b-b8bd39117610
+        provider_name: Home Depot
+        provider_type: workflow
+        selected: false
+        title: Home Depot
+        tool_configurations:
+          build_from:
+            type: variable
+            value:
+            - '1770000000001'
+            - build_from
+          current_item:
+            type: mixed
+            value: '{{#1780047428611.item#}}'
+          max_lat:
+            type: variable
+            value:
+            - '1778593390426'
+            - max_lat
+          max_lon:
+            type: variable
+            value:
+            - '1778593390426'
+            - max_lon
+          min_lat:
+            type: variable
+            value:
+            - '1778593390426'
+            - min_lat
+          min_lon:
+            type: variable
+            value:
+            - '1778593390426'
+            - min_lon
+        tool_description: ''
+        tool_label: Home Depot
+        tool_name: home_depot
+        tool_node_version: '2'
+        tool_parameters: {}
+        type: tool
+      height: 218
+      id: '1780051794499'
+      parentId: '1780047428611'
+      position:
+        x: 131.27383950347576
+        y: 68
+      positionAbsolute:
+        x: 2139.6267051681116
+        y: 503.5095644040349
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 1002
+    - data:
+        error_handle_mode: terminated
+        flatten_output: true
+        height: 227
+        is_parallel: false
+        iterator_input_type: array[object]
+        iterator_selector:
+        - '1780047896920'
+        - result
+        output_selector:
+        - '1780061271071'
+        - result
+        output_type: array[object]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1780061227685start
+        title: Iteration 2
+        type: iteration
+        width: 386
+      height: 227
+      id: '1780061227685'
+      position:
+        x: 2209.023891619736
+        y: -183.7956725439657
+      positionAbsolute:
+        x: 2209.023891619736
+        y: -183.7956725439657
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 386
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1780061227685start
+      parentId: '1780061227685'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 2233.023891619736
+        y: -115.79567254396571
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        is_team_authorization: true
+        iteration_id: '1780061227685'
+        paramSchemas:
+        - auto_generate: null
+          default: ''
+          form: form
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: current_item
+            ja_JP: current_item
+            pt_BR: current_item
+            zh_Hans: current_item
+          llm_description: ''
+          max: null
+          min: null
+          name: current_item
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: ''
+          form: form
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: company_id
+            ja_JP: company_id
+            pt_BR: company_id
+            zh_Hans: company_id
+          llm_description: ''
+          max: null
+          min: null
+          name: company_id
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: CSI Extended
+          form: form
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: costcode_type
+            ja_JP: costcode_type
+            pt_BR: costcode_type
+            zh_Hans: costcode_type
+          llm_description: ''
+          max: null
+          min: null
+          name: costcode_type
+          options:
+          - icon: null
+            label:
+              en_US: CSI Extended
+              ja_JP: CSI Extended
+              pt_BR: CSI Extended
+              zh_Hans: CSI Extended
+            value: CSI Extended
+          - icon: null
+            label:
+              en_US: NHBA Extended
+              ja_JP: NHBA Extended
+              pt_BR: NHBA Extended
+              zh_Hans: NHBA Extended
+            value: NHBA Extended
+          - icon: null
+            label:
+              en_US: From Stored Table
+              ja_JP: From Stored Table
+              pt_BR: From Stored Table
+              zh_Hans: From Stored Table
+            value: From Stored Table
+          - icon: null
+            label:
+              en_US: From Cost Item Database
+              ja_JP: From Cost Item Database
+              pt_BR: From Cost Item Database
+              zh_Hans: From Cost Item Database
+            value: From Cost Item Database
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        params:
+          company_id: ''
+          costcode_type: ''
+          current_item: ''
+        plugin_id: null
+        plugin_unique_identifier: null
+        provider_icon:
+          background: '#FFEAD5'
+          content: 🤖
+        provider_id: 7bcea932-3935-4224-978e-cfdab79c811a
+        provider_name: Cost Code
+        provider_type: workflow
+        selected: false
+        title: Cost Code
+        tool_configurations:
+          company_id:
+            type: mixed
+            value: '{{#1777290742570.company_id#}}'
+          costcode_type:
+            type: variable
+            value:
+            - '1770000000001'
+            - costcode_type
+          current_item:
+            type: mixed
+            value: '{{#1780061227685.item#}}'
+        tool_description: ''
+        tool_label: Cost Code
+        tool_name: cost_code
+        tool_node_version: '2'
+        tool_parameters: {}
+        type: tool
+      height: 140
+      id: '1780061271071'
+      parentId: '1780061227685'
+      position:
+        x: 128
+        y: 68
+      positionAbsolute:
+        x: 2337.023891619736
+        y: -115.79567254396571
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 1002
+    - data:
+        output_type: array[object]
+        selected: false
+        title: Variable Aggregator
+        type: variable-aggregator
+        variables:
+        - - '1780061227685'
+          - output
+        - - '1780047428611'
+          - output
+      height: 135
+      id: '1780061357933'
+      position:
+        x: 3202.4490116042352
+        y: 246.80748440448477
+      positionAbsolute:
+        x: 3202.4490116042352
+        y: 246.80748440448477
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -527.0392179329533
+      y: 191.70512623868353
+      zoom: 0.4799700876194392
+  rag_pipeline_variables: []
