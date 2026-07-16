@@ -1,0 +1,320 @@
+app:
+  description: upload your resume and anlayze it according role
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: Resume-Anlyzer
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai_api_compatible:0.0.47@797b0e4de14fa5e09fba49b0d7110e10781457dd89cdab3cba3416629a92754c
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: document-extractor
+      id: 1778144867229-source-1778145267575-target
+      source: '1778144867229'
+      sourceHandle: source
+      target: '1778145267575'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1778145267575-source-1778145326402-target
+      source: '1778145267575'
+      sourceHandle: source
+      target: '1778145326402'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1778145326402-source-1778145464223-target
+      source: '1778145326402'
+      sourceHandle: source
+      target: '1778145464223'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1778145464223-source-1778145544895-target
+      source: '1778145464223'
+      sourceHandle: source
+      target: '1778145544895'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: User Input
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          default: ''
+          hint: ''
+          label: resume_file
+          options: []
+          placeholder: ''
+          required: true
+          type: file
+          variable: resume_file
+        - default: ''
+          hint: ''
+          label: job_role
+          max_length: 250
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: job_role
+        - default: ''
+          hint: ''
+          label: job_description
+          max_length: 250
+          options: []
+          placeholder: ''
+          required: false
+          type: paragraph
+          variable: job_description
+      height: 160
+      id: '1778144867229'
+      position:
+        x: 0
+        y: 0
+      positionAbsolute:
+        x: 0
+        y: 0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_array_file: false
+        selected: false
+        title: Doc Extractor
+        type: document-extractor
+        variable_selector:
+        - '1778144867229'
+        - resume_file
+      height: 104
+      id: '1778145267575'
+      position:
+        x: 342
+        y: 28
+      positionAbsolute:
+        x: 342
+        y: 28
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            max_tokens: 1200
+            temperature: 0.2
+          mode: chat
+          name: openrouter/free
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 01fa0c3c-6fef-4957-99f4-f13cef28b722
+          role: system
+          text: "You are an expert ATS resume analyzer.\n\nAnalyze the resume text\
+            \ for the target role.\n\nTarget Role:\n{{#1778144867229.job_role#}}\n\
+            \nJob Description:\n{{#1778144867229.job_description#}}\n\nResume Text:\n\
+            {{#1778145267575.text#}}\n\nReturn only valid JSON with this structure:\n\
+            \n{\n  \"candidate_summary\": \"\",\n  \"target_role\": \"\",\n  \"ats_score_out_of_100\"\
+            : 0,\n  \"matched_skills\": [],\n  \"missing_skills\": [],\n  \"technical_skills_found\"\
+            : [],\n  \"projects_detected\": [],\n  \"education_summary\": \"\",\n\
+            \  \"experience_summary\": \"\",\n  \"strengths\": [],\n  \"weaknesses\"\
+            : [],\n  \"improvement_suggestions\": [],\n  \"recommended_keywords\"\
+            : []\n}"
+        selected: false
+        structured_output_enabled: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1778145326402'
+      position:
+        x: 684
+        y: 36
+      positionAbsolute:
+        x: 684
+        y: 36
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            max_tokens: 1000
+            temperature: 0.3
+          mode: chat
+          name: openrouter/free
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 2a1a1641-914a-4694-9fa6-2519b3fa75bb
+          role: system
+          text: 'Convert the resume analysis {{#1778145326402.text#}}JSON into a clean,
+            readable report.
+
+
+            Use this format:
+
+
+            Resume Analysis Report
+
+
+            1. Candidate Summary
+
+            2. ATS Score
+
+            3. Matched Skills
+
+            4. Missing Skills
+
+            5. Technical Skills Found
+
+            6. Projects Detected
+
+            7. Strengths
+
+            8. Weaknesses
+
+            9. Improvement Suggestions
+
+            10. Recommended Keywords
+
+
+            Keep the language simple and professional.'
+        selected: false
+        title: LLM 2
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1778145464223'
+      position:
+        x: 1026
+        y: 36
+      positionAbsolute:
+        x: 1026
+        y: 36
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1778145464223'
+          - text
+          value_type: string
+          variable: Analysis
+        selected: false
+        title: Output
+        type: end
+      height: 88
+      id: '1778145544895'
+      position:
+        x: 1368
+        y: 36
+      positionAbsolute:
+        x: 1368
+        y: 36
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 181.92283527721395
+      y: 176.52508487448614
+      zoom: 0.8040888484979245
+  rag_pipeline_variables: []
